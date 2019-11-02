@@ -1,3 +1,4 @@
 # web
 
+Kurang
 - GABUNG DENGAN KEL 3 READ & ADD
