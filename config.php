@@ -1,6 +1,6 @@
 <?php
     $host = "localhost";
-    $dbname = "phboop2_tugas3";
+    $dbname = "phbweb2_tugas03_PDO";
     $username = "root";
     $password = "";
     try {

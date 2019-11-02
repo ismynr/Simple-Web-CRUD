@@ -1,43 +1,58 @@
 <?php
-    include 'config.php';
-    $query = $db->prepare("SELECT * FROM user");
-    $query->execute();
-    $data = $query->fetchAll();
+    session_start();
+	$c = isset($_GET["page"]) ? $_GET["page"] : ""; 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Update Delete With PDO</title>
+    <meta charset="utf-8">
+    <title>Update Delete With PDO</title>
+    
+    <script type="text/javascript" src="assets/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
 </head>
-<body bgcolor="#CCCCCC">
-<h2><strong><p align="center">Data User</p></strong></h2>
-<table width="807" border="1" cellpadding="0" cellspacing="0" align="center">
-  <tr>
-    <td width="115" height="30" align="center" valign="middle" bgcolor="#00FFFF">Username</td>
-    <td width="175" align="center" valign="middle" bgcolor="#00FFFF">Password</td>
-    <td width="250" align="center" valign="middle" bgcolor="#00FFFF">Email</td>
-    <td width="100" align="center" valign="middle" bgcolor="#00FFFF">TTL</td>
-    <td width="100" align="center" valign="middle" bgcolor="#00FFFF">Alamat</td>
-    <td width="100" align="center" valign="middle" bgcolor="#00FFFF">Foto</td>
-    <td width="100" align="center" valign="middle" bgcolor="#00FFFF">Action</td>
-  </tr>
-            <?php foreach ($data as $value): ?>
-                <tr>
-                    <td p align="center" bgcolor="#FFFFFF"><?php echo $value['username'] ?></td>
-                    <td p align="left" bgcolor="#FFFFFF"><?php echo $value['password'] ?></td>
-                    <td p align="left" bgcolor="#FFFFFF"><?php echo $value['email'] ?></td>
-                    <td p align="center" bgcolor="#FFFFFF"><?php echo $value['ttl'] ?></td>
-                    <td p align="center" bgcolor="#FFFFFF"><?php echo $value['alamat'] ?></td>
-                    <td p align="center" bgcolor="#FFFFFF"><?php echo $value['foto'] ?></td>
-                    <td p align="center" bgcolor="#FFFFFF">
-                        <a href="edit.php?nis=<?php echo $value['nis']?>">Edit</a>
-                        <a href="delete.php?nis=<?php echo $value['nis']?>">Delete</a>
-                    </td>
-                </tr>
- </td>
-  </tr>
-<?php endforeach; ?>
-</table>
+<body>
+
+<?php switch ($c) {
+    case 'add': //penggabungan
+        $text = "TAMBAH USER";
+        $disp = "block";
+        $file = 'operasi/create.php';
+        break;
+    case 'delete':
+        $file = 'operasi/delete.php';
+        break;
+    case 'update':
+        $text = "UBAH DATA";
+        $disp = "block";
+        $file = 'operasi/update.php';
+        break;
+    default: 
+        $text = "DATA USER";
+        $disp = "none";
+        $file = 'operasi/read.php'; //menampilkan datanya
+        break;
+} ?>
+
+<div class="container">
+    <div class="row m-3">
+        <a href="./index.php" class="btn btn-danger mr-3" style="display:<?php echo $disp ?>">Back</a>
+        <h2><?php echo $text ?></h2>
+    </div>
+    <div class="row m-3">
+        <?php 
+            if(isset($_SESSION['flash'])){
+                echo $_SESSION['flash']; 
+                unset($_SESSION['flash']);
+            }
+        ?>
+    </div>
+    <div class="row m-3">
+        <?php require $file ?>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/bootstrap/bootstrap.min.js"></script>
+
 </body>
 </html>
