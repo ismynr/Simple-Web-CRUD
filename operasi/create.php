@@ -8,7 +8,7 @@ if (isset($_POST['create'])) {
     $namaSementara = $_FILES['foto']['tmp_name'];
     $dirUpload = "./img/";
     $terupload = move_uploaded_file($namaSementara, $dirUpload . $namaFile);
-    if ($namaFile) {
+    if ($terupload) {
         try {
             $stmt = $db->prepare($query);
             $stmt->execute([$_POST['username'], $_POST['password'], @$_POST['nama'], $_POST['ttl'], $_POST['alamat'], $_POST['email'], $namaFile]);
